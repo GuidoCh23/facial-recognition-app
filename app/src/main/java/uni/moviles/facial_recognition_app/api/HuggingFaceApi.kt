@@ -26,6 +26,7 @@ data class UsuariosResponse(
 
 interface HuggingFaceApi {
 
+    // Envia 5 fotos y un nombre, el servidor genera el perfil facial
     @Multipart
     @POST("registrar")
     suspend fun registrar(
@@ -33,12 +34,14 @@ interface HuggingFaceApi {
         @Part fotos: List<MultipartBody.Part>
     ): Response<RegistroResponse>
 
+    // Envia una foto y el servidor indica si la persona esta registrada
     @Multipart
     @POST("verificar")
     suspend fun verificar(
         @Part foto: MultipartBody.Part
     ): Response<VerificacionResponse>
 
+    // Devuelve la lista de nombres registrados en el sistema
     @GET("usuarios")
     suspend fun obtenerUsuarios(): Response<UsuariosResponse>
 }

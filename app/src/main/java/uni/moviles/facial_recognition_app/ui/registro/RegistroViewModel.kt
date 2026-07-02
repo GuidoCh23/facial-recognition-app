@@ -44,6 +44,7 @@ class RegistroViewModel : ViewModel() {
             try {
                 val nombreBody = estado.nombre.toRequestBody("text/plain".toMediaType())
 
+                // Convierte cada URI en una parte multipart para enviarla al servidor
                 val partes = estado.fotos.mapIndexed { i, uri ->
                     val archivo = copiarUriACacheDir(context, uri, "foto_$i.jpg")
                     val body = archivo.asRequestBody("image/jpeg".toMediaType())

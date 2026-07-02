@@ -17,6 +17,7 @@ object ApiClient {
         .readTimeout(20, TimeUnit.SECONDS)
         .writeTimeout(20, TimeUnit.SECONDS)
         .addInterceptor(Interceptor { chain ->
+            // Agrega la API key en cada peticion automaticamente
             val request = chain.request().newBuilder()
                 .addHeader("X-API-Key", BuildConfig.API_KEY)
                 .build()
