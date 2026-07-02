@@ -36,8 +36,8 @@ class IdentificacionViewModel : ViewModel() {
         viewModelScope.launch {
             _state.value = _state.value.copy(cargando = true, error = null)
             try {
-                // Copia la imagen a un archivo temporal para poder enviarla como multipart
-                val archivo = File(context.cacheDir, "verificar.jpg")
+                // Copia la imagen a un archivo distinto para evitar leer y escribir el mismo archivo
+                val archivo = File(context.cacheDir, "verificar_envio.jpg")
                 context.contentResolver.openInputStream(uri)?.use { input ->
                     archivo.outputStream().use { output -> input.copyTo(output) }
                 }
