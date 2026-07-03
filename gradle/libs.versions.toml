@@ -11,6 +11,7 @@ navigationCompose = "2.8.5"
 retrofit = "2.11.0"
 coil = "2.7.0"
 material = "1.13.0"
+camerax = "1.4.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -38,6 +39,14 @@ coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coi
 
 # Tema del sistema
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+
+# CameraX
+camera-camera2 = { group = "androidx.camera", name = "camera-camera2", version.ref = "camerax" }
+camera-lifecycle = { group = "androidx.camera", name = "camera-lifecycle", version.ref = "camerax" }
+camera-view = { group = "androidx.camera", name = "camera-view", version.ref = "camerax" }
+
+# Lifecycle runtime para Compose
+lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycleViewmodelCompose" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

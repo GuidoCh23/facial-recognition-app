@@ -71,6 +71,15 @@ dependencies {
     // Imágenes
     implementation(libs.coil.compose)
 
+    // CameraX
+    implementation(libs.camera.camera2)
+    implementation(libs.camera.lifecycle)
+    implementation(libs.camera.view)
+
+    // Lifecycle runtime para Compose
+    implementation(libs.lifecycle.runtime.compose)
+
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun HomeScreen(onRegistrar: () -> Unit, onVerificar: () -> Unit, onLista: () -> Unit) {
+fun HomeScreen(onRegistrar: () -> Unit, onVerificar: () -> Unit, onLista: () -> Unit, onTiempoReal: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -37,6 +37,13 @@ fun HomeScreen(onRegistrar: () -> Unit, onVerificar: () -> Unit, onLista: () -> 
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Ver personas registradas")
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+        OutlinedButton(
+            onClick = onTiempoReal,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Verificacion en tiempo real")
         }
     }
 }
