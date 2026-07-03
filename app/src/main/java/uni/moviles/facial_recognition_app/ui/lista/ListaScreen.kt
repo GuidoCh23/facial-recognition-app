@@ -14,6 +14,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 fun ListaScreen(onVolver: () -> Unit, vm: ListaViewModel = viewModel()) {
     val estado by vm.state.collectAsState()
 
+    // LaunchedEffect(Unit): se ejecuta una sola vez cuando la pantalla aparece
     LaunchedEffect(Unit) { vm.cargarPersonas() }
 
     Column(

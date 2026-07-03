@@ -7,6 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import uni.moviles.facial_recognition_app.BuildConfig
 import java.util.concurrent.TimeUnit
 
+// object = singleton: una sola instancia compartida en toda la app
 object ApiClient {
 
     private const val BASE_URL = "https://7-diegodev-7-facial-access-app.hf.space/"
@@ -25,6 +26,7 @@ object ApiClient {
         })
         .build()
 
+    // by lazy: Retrofit se crea solo la primera vez que se usa, no al arrancar la app
     val api: HuggingFaceApi by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
