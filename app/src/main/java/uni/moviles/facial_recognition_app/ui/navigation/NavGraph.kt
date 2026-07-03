@@ -5,10 +5,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import uni.moviles.facial_recognition_app.ui.home.HomeScreen
-import uni.moviles.facial_recognition_app.ui.identificacion.IdentificacionScreen
 import uni.moviles.facial_recognition_app.ui.lista.ListaScreen
 import uni.moviles.facial_recognition_app.ui.registro.RegistroScreen
 import uni.moviles.facial_recognition_app.ui.tiempo_real.TiempoRealScreen
+import uni.moviles.facial_recognition_app.ui.verificacion.VerificacionScreen
 
 // Define todas las rutas de la app y que pantalla muestra cada una
 @Composable
@@ -18,7 +18,7 @@ fun NavGraph(navController: NavHostController) {
         composable("home") {
             HomeScreen(
                 onRegistrar = { navController.navigate("registro") },
-                onVerificar = { navController.navigate("identificacion") },
+                onVerificar = { navController.navigate("verificacion") },
                 onLista = { navController.navigate("lista") },
                 onTiempoReal = { navController.navigate("tiempo_real") }
             )
@@ -27,8 +27,8 @@ fun NavGraph(navController: NavHostController) {
         composable("registro") {
             RegistroScreen(onVolver = { navController.popBackStack() })
         }
-        composable("identificacion") {
-            IdentificacionScreen(onVolver = { navController.popBackStack() })
+        composable("verificacion") {
+            VerificacionScreen(onVolver = { navController.popBackStack() })
         }
         composable("lista") {
             ListaScreen(onVolver = { navController.popBackStack() })

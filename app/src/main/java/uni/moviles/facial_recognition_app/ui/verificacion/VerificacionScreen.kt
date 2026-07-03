@@ -1,4 +1,4 @@
-package uni.moviles.facial_recognition_app.ui.identificacion
+package uni.moviles.facial_recognition_app.ui.verificacion
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -22,7 +22,7 @@ import coil.compose.rememberAsyncImagePainter
 import uni.moviles.facial_recognition_app.utils.crearUriTemporal
 
 @Composable
-fun IdentificacionScreen(onVolver: () -> Unit, vm: IdentificacionViewModel = viewModel()) {
+fun VerificacionScreen(onVolver: () -> Unit, vm: VerificacionViewModel = viewModel()) {
     val estado by vm.state.collectAsState()
     val context = LocalContext.current
     var uriPendiente by remember { mutableStateOf<Uri?>(null) }
@@ -74,7 +74,7 @@ fun IdentificacionScreen(onVolver: () -> Unit, vm: IdentificacionViewModel = vie
     ) {
         Text("Verificar persona", style = MaterialTheme.typography.headlineMedium)
 
-        // Foto seleccionada, borde verde si está registrado, rojo si es desconocido
+        // Foto seleccionada, borde verde si esta registrado, rojo si es desconocido
         estado.foto?.let { uri ->
             val colorBorde = when (estado.reconocido) {
                 true -> Color.Green
@@ -116,26 +116,26 @@ fun IdentificacionScreen(onVolver: () -> Unit, vm: IdentificacionViewModel = vie
         if (estado.cargando) {
             CircularProgressIndicator()
         } else {
-            // Botones de cámara y galería siempre visibles (salvo mientras carga)
+            // Botones de camara y galeria siempre visibles (salvo mientras carga)
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 OutlinedButton(
                     onClick = { tomarFoto() },
                     modifier = Modifier.weight(1f)
                 ) {
-                    Text(if (estado.foto == null) "Cámara" else "Otra foto")
+                    Text(if (estado.foto == null) "Camara" else "Otra foto")
                 }
                 OutlinedButton(
                     onClick = { galeriaLauncher.launch("image/*") },
                     modifier = Modifier.weight(1f)
                 ) {
-                    Text("Galería")
+                    Text("Galeria")
                 }
             }
 
-            // Botón verificar solo cuando hay foto y no hay resultado aún
+            // Boton verificar solo cuando hay foto y no hay resultado aun
             if (estado.foto != null && estado.reconocido == null) {
                 Button(
-                    onClick = { vm.identificar(context) },
+                    onClick = { vm.verificar(context) },
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text("Verificar")

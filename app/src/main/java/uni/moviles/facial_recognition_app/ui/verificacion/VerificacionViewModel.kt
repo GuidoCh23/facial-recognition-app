@@ -1,4 +1,4 @@
-package uni.moviles.facial_recognition_app.ui.identificacion
+package uni.moviles.facial_recognition_app.ui.verificacion
 
 import android.content.Context
 import android.net.Uri
@@ -13,7 +13,8 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import uni.moviles.facial_recognition_app.api.ApiClient
 import java.io.File
 
-data class IdentificacionState(
+// Representa todos los datos de la pantalla en un solo objeto
+data class VerificacionState(
     val foto: Uri? = null,
     val cargando: Boolean = false,
     val reconocido: Boolean? = null,
@@ -21,19 +22,21 @@ data class IdentificacionState(
     val error: String? = null
 )
 
+class VerificacionViewModel : ViewModel() {
 
-class IdentificacionViewModel : ViewModel() {
-
-    private val _state = MutableStateFlow(IdentificacionState())
-    val state: StateFlow<IdentificacionState> = _state
+    // _state es privado: solo el ViewModel puede modificarlo
+    // state es publico: la pantalla lo lee con collectAsState()
+    private val _state = MutableStateFlow(VerificacionState())
+    val state: StateFlow<VerificacionState> = _state
 
     fun setFoto(uri: Uri) {
-        _state.value = IdentificacionState(foto = uri)
+        _state.value = VerificacionState(foto = uri)
     }
 
-    fun identificar(context: Context) {
+    fun verificar(context: Context) {
         val uri = _state.value.foto ?: return
 
+        // viewModelScope.launch: ejecuta la peticion en segundo plano sin bloquear la UI
         viewModelScope.launch {
             _state.value = _state.value.copy(cargando = true, error = null)
             try {
