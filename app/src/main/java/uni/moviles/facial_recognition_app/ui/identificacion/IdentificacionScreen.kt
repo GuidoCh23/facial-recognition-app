@@ -43,7 +43,8 @@ fun IdentificacionScreen(onVolver: () -> Unit, vm: IdentificacionViewModel = vie
         ActivityResultContracts.RequestPermission()
     ) { concedido ->
         if (concedido) {
-            val uri = crearUriTemporal(context, "verificar.jpg")
+            // Nombre unico para que Coil no muestre la foto anterior desde cache
+            val uri = crearUriTemporal(context, "verificar_${System.currentTimeMillis()}.jpg")
             uriPendiente = uri
             camaraLauncher.launch(uri)
         }
@@ -55,7 +56,7 @@ fun IdentificacionScreen(onVolver: () -> Unit, vm: IdentificacionViewModel = vie
         ) == PackageManager.PERMISSION_GRANTED
 
         if (tienePermiso) {
-            val uri = crearUriTemporal(context, "verificar.jpg")
+            val uri = crearUriTemporal(context, "verificar_${System.currentTimeMillis()}.jpg")
             uriPendiente = uri
             camaraLauncher.launch(uri)
         } else {

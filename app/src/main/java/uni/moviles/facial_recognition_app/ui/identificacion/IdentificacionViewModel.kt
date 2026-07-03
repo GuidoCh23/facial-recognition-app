@@ -21,6 +21,7 @@ data class IdentificacionState(
     val error: String? = null
 )
 
+
 class IdentificacionViewModel : ViewModel() {
 
     private val _state = MutableStateFlow(IdentificacionState())
@@ -41,12 +42,12 @@ class IdentificacionViewModel : ViewModel() {
                 context.contentResolver.openInputStream(uri)?.use { input ->
                     archivo.outputStream().use { output -> input.copyTo(output) }
                 }
-                val fotoPart = MultipartBody.Part.createFormData(
+                val parte = MultipartBody.Part.createFormData(
                     "foto", archivo.name,
                     archivo.asRequestBody("image/jpeg".toMediaType())
                 )
 
-                val respuesta = ApiClient.api.verificar(fotoPart)
+                val respuesta = ApiClient.api.verificar(parte)
                 if (respuesta.isSuccessful) {
                     val body = respuesta.body()
                     _state.value = _state.value.copy(
@@ -56,13 +57,32 @@ class IdentificacionViewModel : ViewModel() {
                     )
                 } else {
                     _state.value = _state.value.copy(
-                        error = "Error del servidor: ${respuesta.code()}",
+                        error = parsearError(respuesta.errorBody()?.string()),
                         cargando = false
                     )
                 }
             } catch (e: Exception) {
                 _state.value = _state.value.copy(error = e.message, cargando = false)
             }
+        }
+    }
+
+    // Traduce el error del servidor a un mensaje entendible para el usuario
+    private fun parsearError(errorBody: String?): String {
+        if (errorBody == null) return "Error desconocido"
+        val detail = try {
+            org.json.JSONObject(errorBody).optString("detail", errorBody)
+        } catch (_: Exception) {
+            errorBody
+        }
+        return when {
+            detail.contains("varios rostros", ignoreCase = true) ||
+            detail.contains("multiples", ignoreCase = true) ->
+                "Se detectaron varios rostros. Asegurate de que solo haya una persona en la imagen."
+            detail.contains("ningun rostro", ignoreCase = true) ||
+            detail.contains("no se detect", ignoreCase = true) ->
+                "No se detecto ningun rostro. Asegurate de que tu cara sea visible y este bien iluminada."
+            else -> "Error del servidor: $detail"
         }
     }
 }
